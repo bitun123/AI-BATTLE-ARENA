@@ -1,12 +1,12 @@
-import { StateGraph, StateSchema, START,END,type GraphNode } from "@langchain/langgraph";
+import { StateGraph, StateSchema, START,END,type GraphNode, CompiledStateGraph } from "@langchain/langgraph";
 import { geminiAiModel, mistralAiModel, cohereAiModel } from "./model.ai.js";
 import { createAgent, providerStrategy, HumanMessage } from "langchain";
 import z from "zod";
 
 const state = new StateSchema({
-  problem: z.string().default(" "),
-  solution_1: z.string().default(" "),
-  solution_2: z.string().default(" "),
+  problem: z.string(), // ⚠️ you are missing this!
+  solution_1: z.string().default(""),
+  solution_2: z.string().default(""),
   judge: z.object({
     solution_1_Score: z.number(),
     solution_2_Score: z.number(),
@@ -26,8 +26,13 @@ const solutionNode: GraphNode<typeof state> = async (state) => {
   };
 };
 
-const judgeNode: GraphNode<typeof state> = async () => {
+const judgeNode: GraphNode<typeof state> = async (state) => {
+
+
+
 const {problem, solution_1, solution_2}  = state;
+
+
 
   const judge = createAgent({
     model: geminiAiModel,
@@ -74,11 +79,17 @@ const {problem, solution_1, solution_2}  = state;
 
 const graph = new StateGraph(state)
     .addNode("solution", solutionNode)
-    .addNode("judge", judgeNode)
+    .addNode("judge_node", judgeNode)
     .addEdge(START, "solution")
-    .addEdge("solution", "judge")
-    .addEdge("judge", END)
+    .addEdge("solution", "judge_node")
+    .addEdge("judge_node", END)
     .compile();
 
 
-export default graph;
+export default async function (problem: string) {
+    const result  = await graph.invoke({
+        problem:problem
+    })
+
+    return result;
+}
