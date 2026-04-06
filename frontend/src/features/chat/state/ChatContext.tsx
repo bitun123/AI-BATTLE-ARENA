@@ -1,9 +1,14 @@
-import { createContext, useState, type ReactNode } from "react";
+import {
+  createContext,
+  useState,
+  type ReactNode,
+  type Dispatch,
+  type SetStateAction,
+} from "react";
 
 type ChatContextType = {
-  // Define any state or functions you want to share across components here
   open: boolean;
-  setOpen: (open: boolean) => void;
+  setOpen: Dispatch<SetStateAction<boolean>>;
 };
 
 export const ChatContext = createContext<ChatContextType>(
