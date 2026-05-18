@@ -23,7 +23,7 @@ function Sidebar() {
   return (
     <>
       <aside
-        className={` fixed inset-y-0 left-0 z-30 w-[15rem]  py-5 min-h-screen overflow-hidden bg-blue-950/95 backdrop-blur transition-transform duration-300 md:relative md:translate-x-0 ${open ? "translate-x-0" : "-translate-x-100"}`}
+        className={` fixed inset-y-0 left-0 z-30 w-[15rem]  py-5 min-h-screen overflow-hidden bg-[#020618] border-r border-gray-800 backdrop-blur transition-transform duration-300 md:relative md:translate-x-0 ${open ? "translate-x-0" : "-translate-x-100"}`}
       >
         <button
           type="button"

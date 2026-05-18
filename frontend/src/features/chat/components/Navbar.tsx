@@ -15,8 +15,6 @@ function Navbar() {
       >
         <Menu size={20} />
       </button>
-
-   
     </header>
   );
 }
