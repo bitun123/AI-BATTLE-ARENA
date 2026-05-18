@@ -3,7 +3,7 @@ import { ChatContext } from "../state/ChatContext";
 import { Menu } from "lucide-react";
 
 function Navbar() {
-  const { open, setOpen } = useContext(ChatContext)!;
+  const {  setOpen } = useContext(ChatContext)!;
 
   return (
     <header className="sticky top-0 z-20 flex h-16 items-center justify-between border-b border-slate-800 bg-slate-950/95 px-4 text-white backdrop-blur md:h-20 md:px-6">
